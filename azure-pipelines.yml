@@ -4,15 +4,13 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-variables:
-  JAVA_HOME: '/usr/lib/jvm/temurin-21-jdk-amd64'
-
 steps:
-- script: |
-    echo "JAVA_HOME is set to $JAVA_HOME"
-    java -version
-    mvn clean test
-  displayName: 'Run Maven tests'
-  env:
-    JAVA_HOME: $(JAVA_HOME)
-    PATH: $(JAVA_HOME)/bin:$(PATH)
+- task: Maven@4
+  inputs:
+    mavenPomFile: 'pom.xml'
+    goals: 'clean test'
+    javaHomeOption: 'PreInstalled'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
