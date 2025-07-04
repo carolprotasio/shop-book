@@ -1,3 +1,4 @@
+
 trigger:
 - master
 
@@ -5,7 +6,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  MAVEN_OPTS: "-Dmaven.compiler.source=24 -Dmaven.compiler.target=24"
+  MAVEN_OPTS: "-Dmaven.compiler.source=17 -Dmaven.compiler.target=17"
 
 steps:
 - task: Cache@2
@@ -15,24 +16,15 @@ steps:
       maven | "$(Agent.OS)"
     path: ~/.m2
 
-# Instalação do Chrome (caso o agente não tenha a versão necessária)
 - script: |
     sudo apt-get update
     sudo apt-get install -y google-chrome-stable
   displayName: 'Install Google Chrome'
 
-# Exibir a versão do Chrome (debug)
-- script: google-chrome --version
+- script: |
+    google-chrome --version
   displayName: 'Show Chrome version'
 
-# Executar os testes com Maven
-- task: Maven@4
-  inputs:
-    mavenPomFile: 'pom.xml'
-    goals: 'clean test'
-    options: '-Dsurefire.useFile=false'
-    javaHomeOption: 'PreInstalled'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
+- script: |
+    mvn clean test
+  displayName: 'Run Maven tests'
