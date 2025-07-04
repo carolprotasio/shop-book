@@ -29,13 +29,15 @@ public class HomePageTest {
     void setup() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--user-data-dir=/tmp/chrome-user-data-" + UUID.randomUUID());
+
+        options.addArguments("--headless=new"); // importante no ambiente CI
+        options.addArguments("--no-sandbox"); // necessário no Azure
+        options.addArguments("--disable-dev-shm-usage"); // previne travamentos
+        options.addArguments("--disable-gpu");
+        options.addArguments("--window-size=1920,1080"); // define tamanho manualmente
+        options.addArguments("--remote-allow-origins=*");
 
         driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
         driver.get("https://practice.automationtesting.in/");
     }
     @Test
