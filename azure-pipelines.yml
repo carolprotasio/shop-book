@@ -5,15 +5,14 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  JAVA_HOME: '/usr/lib/jvm/temurin-21-jdk-amd64'  # ou use Java 17: temurin-17-jdk-amd64
-  PATH: '$(JAVA_HOME)/bin:$(PATH)'
+  JAVA_HOME: '/usr/lib/jvm/temurin-21-jdk-amd64'
 
 steps:
-- task: Maven@4
-  inputs:
-    mavenPomFile: 'pom.xml'
-    goals: 'clean test'
-    options: '-B'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+- script: |
+    echo "JAVA_HOME is set to $JAVA_HOME"
+    java -version
+    mvn clean test
   displayName: 'Run Maven tests'
+  env:
+    JAVA_HOME: $(JAVA_HOME)
+    PATH: $(JAVA_HOME)/bin:$(PATH)
