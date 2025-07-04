@@ -1,4 +1,3 @@
-
 trigger:
 - master
 
@@ -14,7 +13,7 @@ steps:
     key: 'maven | "$(Agent.OS)" | **/pom.xml'
     restoreKeys: |
       maven | "$(Agent.OS)"
-    path: ~/.m2
+    path: $(HOME)/.m2/repository
 
 - script: |
     sudo apt-get update
