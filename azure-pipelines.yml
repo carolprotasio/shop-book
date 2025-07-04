@@ -1,25 +1,19 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-  branches:
-    include:
-      - master
+- master
 
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-  - task: JavaToolInstaller@0
-    inputs:
-      versionSpec: '17'
-      jdkArchitecture: 'x64'
+variables:
+  JAVA_HOME: '/usr/lib/jvm/temurin-21-jdk-amd64'  # ou use Java 17: temurin-17-jdk-amd64
+  PATH: '$(JAVA_HOME)/bin:$(PATH)'
 
-  - task: Maven@3
-    inputs:
-      mavenPomFile: 'pom.xml'
-      goals: 'test'
-      publishJUnitResults: true
-      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+steps:
+- task: Maven@4
+  inputs:
+    mavenPomFile: 'pom.xml'
+    goals: 'clean test'
+    options: '-B'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+  displayName: 'Run Maven tests'
