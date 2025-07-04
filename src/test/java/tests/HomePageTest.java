@@ -15,6 +15,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.HomePage;
 import utils.WaitHelper;
 import java.time.Duration;
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -30,10 +32,9 @@ public class HomePageTest {
         options.addArguments("--headless");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--user-data-dir=/tmp/chrome-user-data-" + System.currentTimeMillis());
+        options.addArguments("--user-data-dir=/tmp/chrome-user-data-" + UUID.randomUUID());
 
-
-        driver = new ChromeDriver();
+        driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.get("https://practice.automationtesting.in/");
     }
