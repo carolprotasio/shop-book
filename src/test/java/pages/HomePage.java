@@ -10,6 +10,11 @@ public class HomePage {
     private WebDriver driver;
     private WaitHelper wait;
 
+    public HomePage(WebDriver driver) {
+        this.driver = driver;
+        this.wait = new WaitHelper(driver, 10);
+    }
+
     private By inputSearch = By.id("s");
     private By resultTitle = By.cssSelector("#content > h1");
 
@@ -33,10 +38,7 @@ public class HomePage {
 
     private By viewBasketButton = By.xpath("//a[contains(@class, 'added_to_cart') and contains(text(), 'View Basket')]");
 
-    public HomePage(WebDriver driver) {
-        this.driver = driver;
-        this.wait = new WaitHelper(driver, 10);
-    }
+
 
     public void addAProductToCart() {
         driver.findElement(addSecondCartButton).click();

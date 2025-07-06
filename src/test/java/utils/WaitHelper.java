@@ -10,7 +10,7 @@ import java.time.Duration;
 public class WaitHelper {
 
     private WebDriver driver;
-    private WebDriverWait wait;
+    public WebDriverWait wait;
 
     public WaitHelper(WebDriver driver, int timeoutInSeconds) {
         this.driver = driver;
