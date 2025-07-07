@@ -31,6 +31,8 @@ public class HomeTest {
         options.addArguments("--disable-gpu");
         options.addArguments("--window-size=1920,1080"); // define tamanho manualmente
         options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--blink-settings=imagesEnabled=false");
+
 
         driver = new ChromeDriver(options);
         driver.get("https://practice.automationtesting.in/");

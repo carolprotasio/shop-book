@@ -1,9 +1,9 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import utils.WaitHelper;
+
+import static java.lang.Thread.sleep;
 
 public class HomePage {
 
@@ -38,15 +38,41 @@ public class HomePage {
 
     private By viewBasketButton = By.xpath("//a[contains(@class, 'added_to_cart') and contains(text(), 'View Basket')]");
 
-
-
-    public void addAProductToCart() {
-        driver.findElement(addSecondCartButton).click();
+    private void scrollToElement(WebElement element) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+    }
+    private void sleep(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+    public void addAProductToCart()  {
+        //driver.findElement(addSecondCartButton).click();
+        var element = wait.waitForElementVisible(addSecondCartButton);
+        scrollToElement(element);
+        sleep(1000);
+        element.click();
     }
     public void addThreeProductToCart() {
-        driver.findElement(addFirstCartButton).click();
-        driver.findElement(addSecondCartButton).click();
-        driver.findElement(addThirdCartButton).click();
+        //driver.findElement(addFirstCartButton).click();
+        //driver.findElement(addSecondCartButton).click();
+        //driver.findElement(addThirdCartButton).click();
+        var first = wait.waitForElementVisible(addFirstCartButton);
+        scrollToElement(first);
+        sleep(1000);
+        first.click();
+
+        var second = wait.waitForElementVisible(addSecondCartButton);
+        scrollToElement(second);
+        sleep(1000);
+        second.click();
+
+        var third = wait.waitForElementVisible(addThirdCartButton);
+        scrollToElement(third);
+        sleep(1000);
+        third.click();
     }
 
     public String getTextViewBasket() {
