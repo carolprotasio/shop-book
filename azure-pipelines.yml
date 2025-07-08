@@ -2,7 +2,6 @@ trigger:
   branches:
     include:
       - master
-      - develop
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -28,6 +27,14 @@ stages:
 
           - script: |
               sudo apt-get update
+              sudo apt-get install -y maven
+            displayName: 'Install Maven'
+
+          - script: |
+              mvn -v
+            displayName: 'Check Maven version'
+
+          - script: |
               sudo apt-get install -y google-chrome-stable
             displayName: 'Install Google Chrome'
 
@@ -48,24 +55,4 @@ stages:
           - script: |
               echo "📂 Conteúdo da pasta target:"
               ls -R target
-              displayName: '📂 Verificar arquivos gerados'
-          - script: |
-              echo "🧪 Verificando conteúdo do XML"
-              cat target/surefire-reports/TEST-*.xml
-            displayName: '🔍 Confirmar arquivos XML'
-
-  - stage: Report
-    displayName: '📊 Report Stage'
-    condition: succeededOrFailed()
-    dependsOn: Test
-    jobs:
-      - job: PublishResults
-        displayName: 'Publicar relatórios JUnit'
-        steps:
-          - task: PublishTestResults@2
-            inputs:
-              testResultsFiles: 'target/surefire-reports/TEST-*.xml'
-              testResultsFormat: 'JUnit'
-              failTaskOnFailedTests: true
-              failTaskOnMissingResultsFile: true
-              testRunTitle: 'Test Report'
+            displayName: '📂 Verificar arquivos gerados'
