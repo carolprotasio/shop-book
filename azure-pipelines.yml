@@ -1,5 +1,7 @@
 trigger:
-- master
+  branches:
+    include:
+      - master
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -7,23 +9,50 @@ pool:
 variables:
   MAVEN_OPTS: "-Dmaven.compiler.source=17 -Dmaven.compiler.target=17"
 
-steps:
-- task: Cache@2
-  inputs:
-    key: 'maven | "$(Agent.OS)" | **/pom.xml'
-    restoreKeys: |
-      maven | "$(Agent.OS)"
-    path: $(HOME)/.m2/repository
+stages:
 
-- script: |
-    sudo apt-get update
-    sudo apt-get install -y google-chrome-stable
-  displayName: 'Install Google Chrome'
+  - stage: Build
+    displayName: '🔧 Build Stage'
+    jobs:
+      - job: BuildJob
+        displayName: 'Instalar dependências e Chrome'
+        steps:
 
-- script: |
-    google-chrome --version
-  displayName: 'Show Chrome version'
+          - task: Cache@2
+            inputs:
+              key: 'maven | "$(Agent.OS)" | **/pom.xml'
+              restoreKeys: |
+                maven | "$(Agent.OS)"
+              path: $(HOME)/.m2/repository
 
-- script: |
-    mvn clean test
-  displayName: 'Run Maven tests'
+          - script: |
+              sudo apt-get update
+              sudo apt-get install -y google-chrome-stable
+            displayName: 'Install Google Chrome'
+
+          - script: |
+              google-chrome --version
+            displayName: 'Show Chrome version'
+
+  - stage: Test
+    displayName: '🧪 Test Stage'
+    dependsOn: Build
+    jobs:
+      - job: RunTests
+        displayName: 'Executar testes com Maven'
+        steps:
+          - script: mvn clean test
+            displayName: 'Run Maven tests'
+
+  - stage: Report
+    displayName: '📊 Report Stage'
+    dependsOn: Test
+    jobs:
+      - job: PublishResults
+        displayName: 'Publicar relatórios JUnit'
+        steps:
+          - task: PublishTestResults@2
+            inputs:
+              testResultsFiles: '**/surefire-reports/TEST-*.xml'
+              testResultsFormat: 'JUnit'
+              failTaskOnFailedTests: true
