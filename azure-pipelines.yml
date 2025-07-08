@@ -41,8 +41,13 @@ stages:
       - job: RunTests
         displayName: 'Executar testes com Maven'
         steps:
-          - script: mvn clean test
+          - script: mvn -B test --fail-at-end -Dsurefire.printSummary=true
             displayName: 'Run Maven tests'
+
+          - script: |
+              echo "📂 Conteúdo da pasta target:"
+              ls -R target
+              displayName: '📂 Verificar arquivos gerados'
 
   - stage: Report
     displayName: '📊 Report Stage'
