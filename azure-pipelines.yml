@@ -46,6 +46,7 @@ stages:
 
   - stage: Report
     displayName: '📊 Report Stage'
+    condition: succeededOrFailed()
     dependsOn: Test
     jobs:
       - job: PublishResults
@@ -53,6 +54,8 @@ stages:
         steps:
           - task: PublishTestResults@2
             inputs:
-              testResultsFiles: '**/surefire-reports/TEST-*.xml'
+              testResultsFiles: '**/target/surefire-reports/TEST-*.xml'
               testResultsFormat: 'JUnit'
               failTaskOnFailedTests: true
+              failTaskOnMissingResultsFile: true
+              testRunTitle: 'Test Report'
