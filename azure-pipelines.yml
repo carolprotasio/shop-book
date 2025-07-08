@@ -55,4 +55,4 @@ stages:
           - script: |
               echo "📂 Conteúdo da pasta target:"
               ls -R target
-            displayName: '📂 Verificar arquivos gerados'
+            displayName: '📂 Verificar arquivos gerados.'
