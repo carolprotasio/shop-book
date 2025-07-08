@@ -2,8 +2,14 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.WaitHelper;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ShopPage {
     private WebDriver driver;
@@ -44,5 +50,31 @@ public class ShopPage {
 
         return wait.waitForElementVisible(cartCount).getText();
     }
+    public void navigateToShopMenu() {
+        driver.findElement(By.cssSelector("#menu-item-40 > a")).click();
+    }
+
+    public void moveSliderRight(int offsetX) {
+        WebElement slider = driver.findElement(By.cssSelector(".price_slider_wrapper .ui-slider-handle:nth-child(2)"));
+        Actions action = new Actions(driver);
+        action.dragAndDropBy(slider, offsetX, 0).perform();
+    }
+
+    public void applyPriceFilter() {
+        driver.findElement(By.cssSelector(".price_slider_amount .button")).click();
+    }
+
+    public List<WebElement> getFilteredProducts() {
+        return driver.findElements(By.cssSelector(".products .product"));
+    }
+
+    public String getFirstProductTitle() {
+        return getFilteredProducts().get(0).findElement(By.cssSelector("h3")).getText();
+    }
+
+    public String getFirstProductPrice() {
+        return getFilteredProducts().get(0).findElement(By.cssSelector(".price")).getText();
+    }
+
 
 }

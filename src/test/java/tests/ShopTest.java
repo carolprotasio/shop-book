@@ -7,12 +7,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import pages.ShopPage;
 import utils.WaitHelper;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ShopTest {
 
@@ -63,6 +67,24 @@ public class ShopTest {
         String total = shop.getCartCount();
         assertEquals("3 Items", total);
     }
+    @Test
+    @DisplayName("CT-003 - Filtrar produtos por preço")
+    public void filterProductByPrice() {
+        ShopPage shop = new ShopPage(driver);
+
+        shop.navigateToShopMenu();
+        shop.moveSliderRight(200);
+        shop.applyPriceFilter();
+
+        List<WebElement> produtos = shop.getFilteredProducts();
+
+        assertEquals(1, produtos.size(), "Deveria retornar apenas 1 produto com esse filtro.");
+        assertEquals("Selenium Ruby", shop.getFirstProductTitle(), "Produto esperado: Selenium Ruby");
+
+        String preco = shop.getFirstProductPrice();
+        assertTrue(preco.contains("500") || preco.contains("₹500"), "Preço deve refletir o filtro aplicado.");
+    }
+
 
 
 
