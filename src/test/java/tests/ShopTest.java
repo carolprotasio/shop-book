@@ -28,7 +28,7 @@ public class ShopTest {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
 
-        options.addArguments("--headless");
+        //options.addArguments("--headless");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-gpu");
         options.addArguments("--disable-dev-shm-usage");
@@ -93,12 +93,47 @@ public class ShopTest {
 
         assertEquals("Selenium Ruby", shop.getProductDetailTitle());
         assertTrue(shop.getProductPrice().contains("₹500.00"));
-
-
     }
+    @Test
+    @DisplayName("CT-005 Deve adicionar um produto no carrinho da pagina de detalhe do produto")
+    public void shouldAddProductFromDetailPage(){
+        ShopPage shop = new ShopPage(driver);
+        String book = "Thinking in HTML";
 
-    @AfterEach
-    public void tearDown() { driver.quit();  }
+        shop.openProductDetail(book);
+        shop.addToCartFromDetailPage();
+
+        String actualMessage = shop.confirmedProductBasketFromDetails();
+        System.out.println("🔍 Mensagem da página: " + actualMessage);
+        // Normaliza texto: remove quebras de linha e aspas tipográficas
+        String normalized = actualMessage
+                .toLowerCase()
+                .replace("\n", " ")
+                .replace("“", "\"")
+                .replace("”", "\"")
+                .trim();
+
+        assertTrue(normalized.contains("\"thinking in html\" has been added to your basket."),
+                "A mensagem esperada não foi encontrada: " + normalized);
+    }
+    @Test
+    @DisplayName("CT-006 Deve adicionar no carrinho um produto e remover do carrinho na pagina - basket")
+        public void shouldRemoveAProductFromBasketPage(){
+            ShopPage shop = new ShopPage(driver);
+
+            shop.addOneProductToCart();
+            shop.goToBasketPage();
+            shop.removeProductFromBasket();
+
+        String actualMessage = shop.isBasketEmpty().trim();
+        System.out.println("🔍 Mensagem da página: " + actualMessage);
+
+            assertEquals("Your basket is currently empty.", actualMessage);
+        }
+
+
+    //@AfterEach
+    //public void tearDown() { driver.quit();  }
 
 
 }

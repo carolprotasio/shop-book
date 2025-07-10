@@ -85,6 +85,25 @@ public class ShopPage {
         return driver.findElement((By.cssSelector("#product-160 > div.summary.entry-summary > div:nth-child(2) > p > span")))
                 .getText();
     }
+    public void addToCartFromDetailPage() {
+        wait.waitForElementVisible(By.cssSelector("button.single_add_to_cart_button")).click();
+    }
+    public String confirmedProductBasketFromDetails(){
+        WebElement message = wait.waitForElementVisible(By.cssSelector(".woocommerce-message"));
+        return message.getText();
+    }
+    public void goToBasketPage(){
+        wait.waitForElementVisible(viewBasketLink).click();
+    }
+    public void removeProductFromBasket() {
+        wait.waitForElementVisible(By.cssSelector(".product-remove a")).click();
+    }
+    public String isBasketEmpty() {
+        return wait.waitForElementVisible(By.cssSelector(".cart-empty")).getText();
+
+    }
+
+
 
 
 
