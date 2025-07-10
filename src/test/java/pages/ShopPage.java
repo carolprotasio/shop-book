@@ -75,6 +75,17 @@ public class ShopPage {
     public String getFirstProductPrice() {
         return getFilteredProducts().get(0).findElement(By.cssSelector(".price")).getText();
     }
+    public void openProductDetail(String productName) {
+        driver.findElement(By.xpath("//h3[text()='" + productName + "']")).click();
+    }
+    public String getProductDetailTitle(){
+        return driver.findElement(By.cssSelector(".product_title")).getText();
+    }
+    public String getProductPrice(){
+        return driver.findElement((By.cssSelector("#product-160 > div.summary.entry-summary > div:nth-child(2) > p > span")))
+                .getText();
+    }
+
 
 
 }

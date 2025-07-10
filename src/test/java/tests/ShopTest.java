@@ -28,7 +28,7 @@ public class ShopTest {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
 
-        options.addArguments("--headless");
+        //options.addArguments("--headless");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-gpu");
         options.addArguments("--disable-dev-shm-usage");
@@ -84,12 +84,21 @@ public class ShopTest {
         String preco = shop.getFirstProductPrice();
         assertTrue(preco.contains("500") || preco.contains("₹500"), "Preço deve refletir o filtro aplicado.");
     }
+    @Test
+    @DisplayName("CT-004 Verificar detalhes do produto Selenium Ruby")
+    public void shouldDisplayProductDetails() {
+        ShopPage shop = new ShopPage(driver);
+
+        shop.openProductDetail("Selenium Ruby");
+
+        assertEquals("Selenium Ruby", shop.getProductDetailTitle());
+        assertTrue(shop.getProductPrice().contains("₹500.00"));
 
 
+    }
 
-
-    @AfterEach
-    public void tearDown() { driver.quit();  }
+    //@AfterEach
+    //public void tearDown() { driver.quit();  }
 
 
 }
