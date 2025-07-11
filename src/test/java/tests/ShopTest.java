@@ -28,7 +28,7 @@ public class ShopTest {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
 
-        //options.addArguments("--headless");
+        options.addArguments("--headless");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-gpu");
         options.addArguments("--disable-dev-shm-usage");
@@ -132,8 +132,8 @@ public class ShopTest {
         }
 
 
-    /@AfterEach
-    //public void tearDown() { driver.quit();  }
+    @AfterEach
+    public void tearDown() { driver.quit();  }
 
 
 }
