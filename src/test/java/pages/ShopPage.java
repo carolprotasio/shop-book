@@ -16,7 +16,9 @@ public class ShopPage {
     private WaitHelper wait;
 
     private final By addToCartBtn = By.xpath("//*[@id=\"content\"]/ul/li[1]/a[2]");
-    private final By viewBasketLink = By.xpath("//*[@id=\"content\"]/ul/li[1]/a[3]");
+    //private final By viewBasketLink = By.xpath("//*[@id=\"content\"]/ul/li[1]/a[3]");
+    private final By viewBasketLink = By.cssSelector(".added_to_cart");
+
     private final By addTwoCartBtn = By.xpath("//*[@id=\"content\"]/ul/li[2]/a[2]");
     private final By addThreeCartBtn = By.xpath("//*[@id=\"content\"]/ul/li[3]/a[2]");
 
@@ -92,16 +94,13 @@ public class ShopPage {
         WebElement message = wait.waitForElementVisible(By.cssSelector(".woocommerce-message"));
         return message.getText();
     }
-    public void goToBasketPage(){
-        wait.waitForElementVisible(viewBasketLink).click();
-    }
-    public void removeProductFromBasket() {
-        wait.waitForElementVisible(By.cssSelector(".product-remove a")).click();
-    }
-    public String isBasketEmpty() {
-        return wait.waitForElementVisible(By.cssSelector(".cart-empty")).getText();
+    public BasketPage goToBasketPage(){
 
+        wait.waitForElementVisible(viewBasketLink).click();
+        return new BasketPage(driver);
     }
+
+
 
 
 

@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import pages.BasketPage;
 import pages.ShopPage;
 import utils.WaitHelper;
 
@@ -28,7 +29,7 @@ public class ShopTest {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
 
-        options.addArguments("--headless");
+        //options.addArguments("--headless");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-gpu");
         options.addArguments("--disable-dev-shm-usage");
@@ -104,7 +105,7 @@ public class ShopTest {
         shop.addToCartFromDetailPage();
 
         String actualMessage = shop.confirmedProductBasketFromDetails();
-        System.out.println("🔍 Mensagem da página: " + actualMessage);
+
         // Normaliza texto: remove quebras de linha e aspas tipográficas
         String normalized = actualMessage
                 .toLowerCase()
@@ -122,19 +123,30 @@ public class ShopTest {
             ShopPage shop = new ShopPage(driver);
 
             shop.addOneProductToCart();
-            shop.goToBasketPage();
-            shop.removeProductFromBasket();
 
-        String actualMessage = shop.isBasketEmpty().trim();
-        System.out.println("🔍 Mensagem da página: " + actualMessage);
 
-            assertEquals("Your basket is currently empty.", actualMessage);
+            BasketPage basket = shop.goToBasketPage();
+            basket.removeProductFromBasket();
+
+        String actualMessage = basket.isBasketEmpty().trim();
+        assertEquals("Your basket is currently empty.", actualMessage);
         }
-    //@Test
-    //@DisplayName("CT-007 Deve filtrar produto")
+    @Test
+    @DisplayName("CT-007 Deve atualizar produto no carrinho")
+    public void shouldUpDateCart()  {
+        ShopPage shop = new ShopPage(driver);
 
-    @AfterEach
-    public void tearDown() { driver.quit();  }
+        shop.addOneProductToCart();
+        BasketPage basket = shop.goToBasketPage();
+
+        basket.updateQuantityTo(3);
+        int atual = basket.getQuantityValue();
+        assertEquals(3, atual, "A quantidade no carrinho deveria ser 3");
+
+    }
+
+    //@AfterEach
+    //public void tearDown() { driver.quit();  }
 
 
 }
