@@ -29,12 +29,12 @@ public class ShopTest {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
 
-        //options.addArguments("--headless");
+        options.addArguments("--headless");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-gpu");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--window-size=1320,1080"); // define tamanho manualmente
-        options.addArguments("--remote-allow-origins=*");
+        //options.addArguments("--remote-allow-origins=*");
 
         driver = new ChromeDriver(options);
         driver.get("https://practice.automationtesting.in/shop/");
@@ -145,8 +145,8 @@ public class ShopTest {
 
     }
 
-    //@AfterEach
-    //public void tearDown() { driver.quit();  }
+    @AfterEach
+    public void tearDown() { driver.quit();  }
 
 
 }
