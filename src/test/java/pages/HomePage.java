@@ -49,28 +49,24 @@ public class HomePage {
         }
     }
     public void addAProductToCart()  {
-
-        var element = wait.waitForElementVisible(addSecondCartButton);
-        scrollToElement(element);
-        sleep(1000);
-        element.click();
+        addToCartWithScrollAndClick(addSecondCartButton);
     }
     public void addThreeProductToCart() {
+        addToCartWithScrollAndClick(addFirstCartButton);
+        addToCartWithScrollAndClick(addSecondCartButton);
+        addToCartWithScrollAndClick(addThirdCartButton);
+    }
 
-        var first = wait.waitForElementVisible(addFirstCartButton);
-        scrollToElement(first);
+    private void addToCartWithScrollAndClick(By buttonLocator) {
+        WebElement button = wait.waitForElementVisible(buttonLocator);
+        scrollToElement(button);
         sleep(1000);
-        first.click();
 
-        var second = wait.waitForElementVisible(addSecondCartButton);
-        scrollToElement(second);
-        sleep(1000);
-        second.click();
-
-        var third = wait.waitForElementVisible(addThirdCartButton);
-        scrollToElement(third);
-        sleep(1000);
-        third.click();
+        try {
+            button.click();
+        } catch (ElementClickInterceptedException e) {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", button);
+        }
     }
 
     public String getTextViewBasket() {
