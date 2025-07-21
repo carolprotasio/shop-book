@@ -5,7 +5,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -143,9 +142,23 @@ public class ShopTest {
         assertEquals(3, atual, "A quantidade no carrinho deveria ser 3");
 
     }
+    @Test
+    @DisplayName("CT-011 - Validar fluxo completo de checkout com produto no carrinho")
+    public void shouldCheckedOutSuccessful(){
+        ShopPage shop = new ShopPage(driver);
+        shop.addOneProductToCart();
+        shop.goToBasketPage();
 
-    @AfterEach
-    public void tearDown() { driver.quit();  }
+        BasketPage basket = new BasketPage(driver);
+        Integer qtd = basket.getQuantityValue();
+        assertEquals(1, qtd);
+
+        basket.goToCheckoutPage();
+    }
+
+
+    //@AfterEach
+    //public void tearDown() { driver.quit();  }
 
 
 }

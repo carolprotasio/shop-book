@@ -43,6 +43,11 @@ public class BasketPage {
         WebElement qtyInput = wait.waitForElementVisible(quantityInput);
         return Integer.parseInt(qtyInput.getAttribute("value"));
     }
+    public ChekoutPage goToCheckoutPage(){
+        wait.waitForElementVisible(By.cssSelector("#page-34 > div > div.woocommerce > div > div > div > a")).click();
+        return new ChekoutPage(driver);
+
+    }
 
 
 
