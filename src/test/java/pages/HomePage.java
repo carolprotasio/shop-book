@@ -49,16 +49,14 @@ public class HomePage {
         }
     }
     public void addAProductToCart()  {
-        //driver.findElement(addSecondCartButton).click();
+
         var element = wait.waitForElementVisible(addSecondCartButton);
         scrollToElement(element);
         sleep(1000);
         element.click();
     }
     public void addThreeProductToCart() {
-        //driver.findElement(addFirstCartButton).click();
-        //driver.findElement(addSecondCartButton).click();
-        //driver.findElement(addThirdCartButton).click();
+
         var first = wait.waitForElementVisible(addFirstCartButton);
         scrollToElement(first);
         sleep(1000);

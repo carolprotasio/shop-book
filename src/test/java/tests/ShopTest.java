@@ -34,7 +34,6 @@ public class ShopTest {
         options.addArguments("--disable-gpu");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--window-size=1320,1080"); // define tamanho manualmente
-        //options.addArguments("--remote-allow-origins=*");
 
         driver = new ChromeDriver(options);
         driver.get("https://practice.automationtesting.in/shop/");

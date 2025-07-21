@@ -16,7 +16,6 @@ public class ShopPage {
     private WaitHelper wait;
 
     private final By addToCartBtn = By.xpath("//*[@id=\"content\"]/ul/li[1]/a[2]");
-    //private final By viewBasketLink = By.xpath("//*[@id=\"content\"]/ul/li[1]/a[3]");
     private final By viewBasketLink = By.cssSelector(".added_to_cart");
 
     private final By addTwoCartBtn = By.xpath("//*[@id=\"content\"]/ul/li[2]/a[2]");
@@ -78,7 +77,26 @@ public class ShopPage {
         return getFilteredProducts().get(0).findElement(By.cssSelector(".price")).getText();
     }
     public void openProductDetail(String productName) {
-        driver.findElement(By.xpath("//h3[text()='" + productName + "']")).click();
+        //driver.findElement(By.xpath("//h3[text()='" + productName + "']")).click();
+        WebElement product = wait.waitForElementVisible(By.xpath("//h3[text()='" + productName + "']"));
+
+        // Scroll até o elemento para garantir visibilidade
+        ((org.openqa.selenium.JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", product);
+
+        // Pequeno delay para dar tempo de algum overlay sair (pode ajustar conforme necessidade)
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Tenta clicar normalmente
+        try {
+            product.click();
+        } catch (org.openqa.selenium.ElementClickInterceptedException e) {
+            // Se não conseguir, tenta forçar o clique com JavaScript
+            ((org.openqa.selenium.JavascriptExecutor) driver).executeScript("arguments[0].click();", product);
+        }
     }
     public String getProductDetailTitle(){
         return driver.findElement(By.cssSelector(".product_title")).getText();

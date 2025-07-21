@@ -30,7 +30,6 @@ public class HomeTest {
         options.addArguments("--disable-dev-shm-usage"); // previne travamentos
         options.addArguments("--disable-gpu");
         options.addArguments("--window-size=1920,1080"); // define tamanho manualmente
-        //options.addArguments("--remote-allow-origins=*");
         options.addArguments("--blink-settings=imagesEnabled=false");
 
 
