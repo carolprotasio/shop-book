@@ -157,8 +157,8 @@ public class ShopTest {
     }
 
 
-    //@AfterEach
-    //public void tearDown() { driver.quit();  }
+    @AfterEach
+    public void tearDown() { driver.quit();  }
 
 
 }
