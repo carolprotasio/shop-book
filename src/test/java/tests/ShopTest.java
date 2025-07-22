@@ -10,7 +10,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import pages.BasketPage;
+import pages.ChekoutPage;
 import pages.ShopPage;
+import utils.UserData;
+import utils.UserDataFactory;
 import utils.WaitHelper;
 
 import java.util.List;
@@ -143,7 +146,7 @@ public class ShopTest {
 
     }
     @Test
-    @DisplayName("CT-011 - Validar fluxo completo de checkout com produto no carrinho")
+    @DisplayName("CT-008 - Validar fluxo completo de checkout com produto no carrinho")
     public void shouldCheckedOutSuccessful(){
         ShopPage shop = new ShopPage(driver);
         shop.addOneProductToCart();
@@ -154,6 +157,25 @@ public class ShopTest {
         assertEquals(1, qtd);
 
         basket.goToCheckoutPage();
+
+        ChekoutPage cart = new ChekoutPage(driver);
+        UserData user = UserDataFactory.generateValidUser();
+
+        cart.fillFirstName(user.firstName);
+        cart.fillLastName(user.lastName);
+        cart.fillEmail(user.email);
+        cart.fillPhone(user.phone);
+        cart.fillAddress(user.address);
+        cart.fillCity(user.city);
+        //cart.fillState(user.state);
+        cart.fillPostcode(user.postcode);
+        cart.fillPhone(user.phone);
+        //cart.selectCountry(user.country);
+
+        cart.placeOrder();
+
+        String confirmation = cart.getOrderConfirmation();
+        assertTrue(confirmation.contains("Thank you. Your order has been received."));
     }
 
 
