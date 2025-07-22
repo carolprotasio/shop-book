@@ -24,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ShopTest {
 
     private WebDriver driver;
-    private WaitHelper wait;
 
     @BeforeEach
     void setupTest() {
@@ -167,13 +166,11 @@ public class ShopTest {
         cart.fillPhone(user.phone);
         cart.fillAddress(user.address);
         cart.fillCity(user.city);
-        //cart.fillState(user.state);
         cart.fillPostcode(user.postcode);
         cart.fillPhone(user.phone);
-        //cart.selectCountry(user.country);
+
 
         cart.placeOrder();
-
         String confirmation = cart.getOrderConfirmation();
         assertTrue(confirmation.contains("Thank you. Your order has been received."));
     }

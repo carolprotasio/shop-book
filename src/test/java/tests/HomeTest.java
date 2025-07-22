@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class HomeTest {
 
     private WebDriver driver;
-    private WaitHelper wait;
 
     @BeforeEach
     void setup() {

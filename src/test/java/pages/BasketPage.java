@@ -14,7 +14,6 @@ public class BasketPage {
     private final By subtotalText = By.cssSelector("tr.cart-subtotal td span.woocommerce-Price-amount");
 
 
-    //tr.cart-subtotal > td > span
     public BasketPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WaitHelper(driver, 10);
@@ -27,7 +26,6 @@ public class BasketPage {
         return wait.waitForElementVisible(By.cssSelector(".cart-empty")).getText();
 
     }
-
     public void updateQuantityTo(int quantity) {
         WebElement qtyInput = wait.waitForElementVisible(quantityInput);
         qtyInput.clear();
@@ -35,10 +33,6 @@ public class BasketPage {
         driver.findElement(updateCartBtn).click();
     }
 
-    public String getSubtotal() {
-        WebElement element = wait.waitForElementVisible(subtotalText);
-        return element.getText().trim();
-    }
     public int getQuantityValue() {
         WebElement qtyInput = wait.waitForElementVisible(quantityInput);
         return Integer.parseInt(qtyInput.getAttribute("value"));

@@ -77,20 +77,17 @@ public class ShopPage {
         return getFilteredProducts().get(0).findElement(By.cssSelector(".price")).getText();
     }
     public void openProductDetail(String productName) {
-        //driver.findElement(By.xpath("//h3[text()='" + productName + "']")).click();
+
         WebElement product = wait.waitForElementVisible(By.xpath("//h3[text()='" + productName + "']"));
 
-        // Scroll até o elemento para garantir visibilidade
         ((org.openqa.selenium.JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", product);
 
-        // Pequeno delay para dar tempo de algum overlay sair (pode ajustar conforme necessidade)
-        try {
+               try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        // Tenta clicar normalmente
         try {
             product.click();
         } catch (org.openqa.selenium.ElementClickInterceptedException e) {
