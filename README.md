@@ -1,3 +1,8 @@
+![Java](https://img.shields.io/badge/Java-21+-red)
+![Selenium](https://img.shields.io/badge/Selenium-4.x-green)
+![Azure-Pipelines](https://img.shields.io/badge/Azure%20Pipelines-CI-blue)
+![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow)
+
 # 📚 Shop-Book com Selenium e Azure
 
 Projeto de estudo voltado para testes automatizados utilizando **Selenium WebDriver** com **Java**, focado em integração com **Azure DevOps** para execução contínua dos testes automatizados. Todo o fluxo foi construído simulando um ambiente profissional: a geração de tarefas foi feita com o apoio de IA, os testes foram versionados e organizados no Azure Boards, e a automação integrada ao pipeline CI.
@@ -92,16 +97,30 @@ Também foi utilizado o **Azure Boards** para simular o gerenciamento de tarefas
 
 ---
 
+## ⚙️ Pré-requisitos
+
+- Java 21 ou superior
+- Maven 3.8+
+- Google Chrome instalado
+- Git
+
+Clone o projeto:
+
+```bash
+git clone https://github.com/carolprotasio/shop-book.git
+```
+
 ## 📌 Conclusão
 
 Este projeto proporcionou uma experiência completa de testes automatizados Web com foco em:
 
-- Profundidade técnica no uso do **Selenium WebDriver com Java**.
-- Experiência com **integração contínua**, simulando um ciclo de desenvolvimento ágil.
-- Organização de tarefas e controle de execuções no **Azure DevOps**.
-- Uso prático de **IA para simular demandas** de um ambiente de QA profissional.
+- Profundidade técnica no uso do Selenium WebDriver com Java.
+- Conhecimento aplicado em ambientes CI/CD com Azure Pipelines.
+- Integração realista com Azure Boards para simular gestão de QA.
+- Uso de boas práticas em arquitetura de testes (POM, fábrica de dados, organização de código).
+- Simulação prática de sprints, utilizando IA como geradora de demandas e tarefas de teste.
+- Execução contínua e validada automaticamente a cada push no repositório.
 
-Além de fortalecer a prática técnica, esse projeto também simulou a rotina de um Analista de QA atuando com automação e CI/CD em um cenário corporativo moderno.
 
 ---
 
